@@ -4,13 +4,10 @@
 using namespace std;
 
 //division sintetica
-void Division(double polinomio[],int grado,double x,double &residuo,double &residuoDerivada)
-
-{
+void Division(double polinomio[],int grado,double x,double &residuo,double &residuoDerivada){
     double aux=polinomio[grado],division[grado];
     division[grado]=aux;
-    for(int i=grado-1;i>=0;i--)
-    {
+    for(int i=grado-1;i>=0;i--){
         division[i]=polinomio[i]+aux;
         aux=0;
         aux=division[i]*x;
@@ -18,9 +15,7 @@ void Division(double polinomio[],int grado,double x,double &residuo,double &resi
     residuo=division[0];
     int tam=grado;
     for(int i=tam;i>=1;i--)
-    {
         residuoDerivada=residuoDerivada*x+division[i];
-    }
 
 }
 
@@ -37,7 +32,8 @@ int main()
         cout<<"Coeficiente x^"<<i<<" ";
         cin>>polinomio[i];
     }
-    double x=-(polinomio[1])/polinomio[0],xAnt;
+    //double x=-(polinomio[1])/polinomio[0];
+    double x=1, xAnt;
     cout << "x inicial es: " << x;
     cout<<endl;
     cout<<"Maximo de iteraciones: ";
