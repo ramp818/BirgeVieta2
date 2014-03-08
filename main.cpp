@@ -38,6 +38,7 @@ int main()
         cin>>polinomio[i];
     }
     double x=-(polinomio[1])/polinomio[0],xAnt;
+    cout << "x inicial es: " << x;
     cout<<endl;
     cout<<"Maximo de iteraciones: ";
     cin>>iteraciones;
