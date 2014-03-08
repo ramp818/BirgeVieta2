@@ -1,56 +1,62 @@
 #include <iostream>
-#include <stdlib.h>
+#include <cmath>
 
 using namespace std;
 
-//division sintetica
-void Division(double polinomio[],int grado,double x,double &residuo,double &residuoDerivada){
-    double aux=polinomio[grado],division[grado];
-    division[grado]=aux;
-    for(int i=grado-1;i>=0;i--){
-        division[i]=polinomio[i]+aux;
-        aux=0;
-        aux=division[i]*x;
-    }
-    residuo=division[0];
-    int tam=grado;
-    for(int i=tam;i>=1;i--)
-        residuoDerivada=residuoDerivada*x+division[i];
+float p[6], ply[6],q[6];
 
+float division(int m, float r){
+                q[0] = p[0];
+                for(int i=1;i<=m;i++){
+                    q[i] = (q[i-1]*r)+p[i];
+                }
+                cout << endl;
+
+                for(int i=0;i<=m;i++){
+                    cout << q[i] << " ";
+                }
+
+                return(q[m]);
 }
 
-int main()
-{
-    int grado,iteraciones,contRaices=1,contIteracion=1;
-    double error,residuo=0,residuoDerivada=0;
+int main(){
+                int grado, menorAEpsilon=0;
+                float r, x,x1, fx, fdx;
+                float epsilon;
+                cout << "Metodo Birge Vieta" << endl;
+                cout << "Escribe el grado del polinomio: ";
+                cin >> grado;
+                cout << "Tolerancia de error: ";
+                cin >> epsilon;
 
-    cout<<"Grado del polinomio"<<endl;
-    cin>>grado;
-    double polinomio[grado];
-    for(int i=grado;i>=0;i--)
-    {
-        cout<<"Coeficiente x^"<<i<<" ";
-        cin>>polinomio[i];
-    }
-    //double x=-(polinomio[1])/polinomio[0];
-    double x=1, xAnt;
-    cout << "x inicial es: " << x;
-    cout<<endl;
-    cout<<"Maximo de iteraciones: ";
-    cin>>iteraciones;
-    cout<<endl;
-    cout<<"Toleracia de error: ";
-    cin>>error;
-    do
-    {
-       xAnt=x;
-       Division(polinomio,grado,x,residuo,residuoDerivada);
-       x=xAnt-(residuo/residuoDerivada);
-       contIteracion++;
+                for(int i = 0; i <= grado; i++){
+                    cout << "Coeficiente x[" << grado-i << "] = ";
+                    cin >> p[i];
+                    ply[i] = p[i];
+                }
 
-    }while(contIteracion<=iteraciones);
-    cout<<residuo<<" "<<residuoDerivada<<endl;
-    cout<<xAnt<<endl;
+                r = 1;
+                x = r;
 
-    return 0;
+                do{
+                    cout << endl << x << endl;
+                    fx = division(grado,x);
+                        for(int i=0;i<=grado;i++)
+                            p[i]=q[i];
+
+                    fdx = division(grado-1,x);
+                    x1 = x - (fx/fdx);
+
+                    if(fabs(x1-x) <= epsilon)
+                        menorAEpsilon = true;
+
+                    x = x1;
+
+                    for(int i=0;i<=5;i++){
+                        p[i]=ply[i];
+                    }
+
+                }while(!menorAEpsilon);
+
+                cout << endl << "La raiz es: " << x1 << endl;
 }
